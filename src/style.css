@@ -261,14 +261,10 @@ body {
 
 @media screen and (max-width: 1450px) {
   .gameboard {
-    display: grid;
     grid-template-rows: 1fr 0.25fr 1fr 0.25fr;
     grid-template-columns: none;
     margin: 5rem auto;
     padding: 0 5rem;
-    gap: 2rem;
-    box-sizing: border-box;
-    justify-content: space-evenly;
   }
 
   .boardTwo {
