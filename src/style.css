@@ -3,7 +3,7 @@
 body {
   padding: 0;
   margin: 0;
-  /* background-image: url("./ocean.jpg"); */
+  min-width: max-content;
   background-color: black;
   font-family: "Orbitron", serif;
 }
@@ -11,17 +11,20 @@ body {
 .header {
   font-family: "Orbitron", serif;
   font-size: 3rem;
-  padding: 1.5rem;
+  padding: 1.5rem 0;
   box-sizing: border-box;
   text-align: center;
   border-bottom: 1rem solid steelblue;
   background-color: black;
   color: #00ff41;
   letter-spacing: 0.2rem;
+  width: 100%;
+  text-align: center;
 }
 
 .winnerBanner {
   display: none;
+  margin-top: 0.5rem;
   text-align: center;
   background-image: linear-gradient(45deg, green, greenyellow);
   color: white;
@@ -35,9 +38,9 @@ body {
 .gameboard {
   display: grid;
   grid-template-columns: 1fr 0.25fr 1fr;
-  grid-template-rows: 1fr;
+  /* grid-template-rows: 1fr; */
   margin: 5rem auto;
-  padding: 0 5rem;
+  padding: 0 1rem;
   gap: 2rem;
   box-sizing: border-box;
   justify-content: space-evenly;
@@ -51,7 +54,11 @@ body {
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(12, 1fr);
   background-color: grey;
-  justify-self: center;
+  margin: auto;
+}
+
+.boardTwo {
+  margin: auto;
 }
 
 .boardTwo .containerP2 {
@@ -250,4 +257,31 @@ body {
 
 .destroyer-color {
   background-color: rgba(19, 154, 181, 0.8);
+}
+
+@media screen and (max-width: 1450px) {
+  .gameboard {
+    display: grid;
+    grid-template-rows: 1fr 0.25fr 1fr 0.25fr;
+    grid-template-columns: none;
+    margin: 5rem auto;
+    padding: 0 5rem;
+    gap: 2rem;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+  }
+
+  .boardTwo {
+    grid-column: 1/2;
+    grid-row: 3/4;
+  }
+
+  .legend-box {
+    grid-column: 1/2;
+    grid-row: 4/5;
+  }
+
+  .BtnContainer {
+    padding: 3rem;
+  }
 }

@@ -115,6 +115,91 @@ const gameWrapper = () => {
     });
   });
 
+  // Mobile Touch support
+  document.querySelectorAll(".ship").forEach((ship) => {
+    let startX, startY;
+
+    ship.addEventListener("touchstart", (e) => {
+      draggedShip = ship;
+      document.draggedShipLength = parseInt(ship.dataset.length);
+      document.draggedShipOrient = ship.dataset.orient;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    });
+
+    ship.addEventListener("touchend", (e) => {
+      const touch = e.changedTouches[0];
+      const dropTarget = document.elementFromPoint(
+        touch.clientX,
+        touch.clientY
+      );
+
+      if (dropTarget && dropTarget.classList.contains("cell")) {
+        const x = parseInt(dropTarget.dataset.xaxis);
+        const y = parseInt(dropTarget.dataset.yaxis);
+        const shipLength = document.draggedShipLength;
+        const orient = document.draggedShipOrient;
+
+        if (isValidPlacement(y, x, shipLength, orient)) {
+          placeShip(y, x, shipLength, orient, draggedShip.id);
+          draggedShip.remove();
+          drop++;
+          highlightCells(
+            y,
+            x,
+            document.draggedShipLength,
+            document.draggedShipOrient,
+            "remove"
+          );
+        } else {
+          highlightCells(
+            y,
+            x,
+            document.draggedShipLength,
+            document.draggedShipOrient,
+            "remove"
+          );
+          console.log("Invalid placement");
+        }
+      }
+    });
+
+    let prevCell = null;
+
+    ship.addEventListener("touchmove", (e) => {
+      const touch = e.touches[0];
+      const current = document.elementFromPoint(touch.clientX, touch.clientY);
+
+      if (current && current.classList.contains("cell")) {
+        const x = parseInt(current.dataset.xaxis);
+        const y = parseInt(current.dataset.yaxis);
+
+        // "Simulated dragleave"
+        if (prevCell && prevCell !== current) {
+          const px = parseInt(prevCell.dataset.xaxis);
+          const py = parseInt(prevCell.dataset.yaxis);
+          highlightCells(
+            py,
+            px,
+            document.draggedShipLength,
+            document.draggedShipOrient,
+            "remove"
+          );
+        } else {
+          highlightCells(
+            y,
+            x,
+            document.draggedShipLength,
+            document.draggedShipOrient,
+            "add"
+          );
+        }
+
+        prevCell = current;
+      }
+    });
+  });
+
   startBtn.addEventListener("click", (e) => {
     e.preventDefault();
     if (drop < 5) {
